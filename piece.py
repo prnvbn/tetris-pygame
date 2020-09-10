@@ -1,5 +1,3 @@
-import environment
-
 from defs import shapes
 from defs import shape_colors
 

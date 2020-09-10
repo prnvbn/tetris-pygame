@@ -1,5 +1,11 @@
 import defs as ds
 
+import pygame
+import random
+
+from defs import shapes
+from defs import shape_colors
+
 def create_grid(locked_positions={}, hieght=20, width=20):
     """Creates a Grid!
 
@@ -25,37 +31,5 @@ def create_grid(locked_positions={}, hieght=20, width=20):
                 grid[row][j] = colour
     return grid
 
-def convert_shape_format(shape):
-    pass
-
-def valid_space(shape, grid):
-    pass
-
-def check_lost(positions):
-    pass
-
 def get_shape():
-    return 
-
-def draw_text_middle(text, size, color, surface):  
-    pass
-   
-def draw_grid(surface, row, col):
-    pass
-
-def clear_rows(grid, locked):
-    pass
-
-def draw_next_shape(shape, surface):
-    pass
-
-def draw_window(surface):
-    pass
-
-def main():
-    pass
-
-def main_menu():
-    pass
-
-main_menu()  # start game    
+    return random.choice(shapes)
