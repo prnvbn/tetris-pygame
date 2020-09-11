@@ -33,6 +33,17 @@ def get_shape():
     return random.choice(shapes)
 
 def draw_grid(surface, grid):
+    """Draws the Tetris gameboard grid"""
+    for i in range(grid):
+        for j in range(len(grid[i])):
+            pygame.draw.rect(Surface=surface, color=grid[i][j], Rect=(top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), width=0)
+
+    # Drawing the grid border
+    pygame.draw.rect(surface, (0, 255, 0), (top_left_x, top_left_y, play_width, play_height), 4)      
+
+
+def draw_window(surface, grid):
+    """Draws the Tetris game window"""
     surface.fill((0, 0, 0))
 
     pygame.font.init()
@@ -40,13 +51,5 @@ def draw_grid(surface, grid):
     label = font.render("Tetris", 1, (255, 255, 255))
 
     surface.blit(label, (top_left_x + play_width/2 - (label.get_width()/2), 30))
-
-    # Drawing the gameboard
-    for i in range(grid):
-        for j in range(len(grid[i])):
-            pygame.draw.rect(Surface=surface, color=grid[i][j], Rect=(top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), width=0)
-
-    # Drawing the gameboard border
-    pygame.draw.rect(surface, (0, 255, 0), (top_left_x, top_left_y, play_width, play_height), 4)      
-
-    pygame.display.update()        
+    draw_grid(surface, grid)
+    pygame.display.update()
