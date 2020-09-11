@@ -35,7 +35,7 @@ def get_shape():
 
 def draw_grid(surface, grid):
     """Draws the Tetris gameboard grid"""
-    for i in range(grid):
+    for i in range(len(grid)):
         for j in range(len(grid[i])):
             pygame.draw.rect(Surface=surface, color=grid[i][j], Rect=(top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), width=0)
 
