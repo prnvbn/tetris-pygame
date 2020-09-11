@@ -98,3 +98,10 @@ def main(win):
                         curr_piece.rotation -= 1
 
         draw_window(surface=win, grid=grid)                
+
+def main_menu(win):
+    main(win)
+
+win = pygame.display.set_mode((s_width, s_height))
+pygame.display.set_caption("Tetris")
+main_menu(win)
