@@ -33,8 +33,8 @@ def get_shape():
     """Returns a random shape from [S, Z, I, O, J, L, T]"""
     return Piece(5, 0, random.choice(shapes))
 
-def draw_grid(surface, grid):
-    """Draws the Tetris gameboard grid"""
+def fill_grid(surface, grid):
+    """Fills the Tetris gameboard grid"""
     for i in range(len(grid)):
         for j in range(len(grid[i])):
             pygame.draw.rect(surface, grid[i][j], (top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
@@ -51,8 +51,8 @@ def draw_window(surface, grid):
     font  = pygame.font.SysFont('agencyfb', 60)
     label = font.render("Tetris", 1, (255, 255, 255))
 
+    fill_grid(surface, grid)
     surface.blit(label, (top_left_x + play_width/2 - (label.get_width()/2), 30))
-    draw_grid(surface, grid)
     pygame.display.update()
 
 def valid_space(piece, grid):
