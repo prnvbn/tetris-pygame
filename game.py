@@ -200,7 +200,7 @@ def main(win):
             if event.type == pygame.QUIT:
                 run = False
                 pygame.display.quit()
-                pygame.mixer.music.stop()
+                
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
@@ -208,20 +208,27 @@ def main(win):
                     if not valid_space(curr_piece, grid):
                         curr_piece.x +=1
 
-                if event.key == pygame.K_RIGHT:
+                elif event.key == pygame.K_RIGHT:
                     curr_piece.x += 1
                     if not valid_space(curr_piece, grid):
                         curr_piece.x -=1
 
-                if event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_DOWN:
                     curr_piece.y += 1
                     if not valid_space(curr_piece, grid):
                         curr_piece.y -=1
 
-                if event.key == pygame.K_UP:
+                elif event.key == pygame.K_UP:
                     curr_piece.rotation += 1
                     if not valid_space(curr_piece, grid):
                         curr_piece.rotation -= 1
+
+                elif event.key == pygame.K_q:
+                    draw_middle_text(win, "YOU ENDED THE GAME", 80, (255, 255, 255))
+                    pygame.display.update()
+                    pygame.time.delay(1000)
+                    run = False
+                    break
 
         piece_positions = convert_piece(curr_piece)
 
@@ -265,7 +272,7 @@ def main_menu(win):
                 run = False
             if event.type == pygame.KEYDOWN:
                 main(win)
-
+                pygame.mixer.music.stop()
     pygame.display.quit()
 
 win = pygame.display.set_mode((s_width, s_height))
