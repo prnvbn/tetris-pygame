@@ -195,6 +195,7 @@ def main(win):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+                pygame.display.quit()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
@@ -251,14 +252,15 @@ def main_menu(win):
 
     while run:
         win.fill((0, 0, 0))
-        draw_middle_text(("Press any key to play", 60, (255, 255, 255)))
+        draw_middle_text(win, "Press any key to play", 60, (255, 255, 255))
         pygame.display.update()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
             if event.type == pygame.KEYDOWN:
-                main()
+                main(win)
+
     pygame.display.quit()
 
 win = pygame.display.set_mode((s_width, s_height))
