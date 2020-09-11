@@ -49,6 +49,15 @@ def draw_next_piece_window(surface, piece):
 
     surface.blit(label, (sx+50, sy-25))
 
+def draw_score_window(surface, rows_cleared):
+    font = pygame.font.SysFont("agencyfb", 30) 
+    label = font.render(f"Rows Cleared: {rows_cleared}", 1, (255, 255, 255)) 
+
+    sx = top_left_x + play_width + 50
+    sy = top_left_y + play_height/2 -100
+
+    surface.blit(label, (sx, sy-120))
+
 def fill_grid(surface, grid):
     """Fills the Tetris gameboard grid"""
     for i in range(len(grid)):
@@ -71,7 +80,7 @@ def draw_gridlines(surface, grid):
             # Vertical lines
             pygame.draw.line(surface, (128, 128, 128), (sx + j*block_size, sy), (sx + j*block_size, sy + play_height))
 
-def draw_window(surface, grid):
+def draw_window(surface, grid, rows_cleared=0):
     """Draws the Tetris game window"""
     surface.fill((0, 0, 0))
 
@@ -81,6 +90,7 @@ def draw_window(surface, grid):
 
     fill_grid(surface, grid)
     surface.blit(label, (top_left_x + play_width/2 - (label.get_width()/2), 30))
+    draw_score_window(surface, rows_cleared)
     draw_gridlines(surface, grid)
 
 
@@ -124,7 +134,7 @@ def lost(positions):
             return True 
 
 def clear_rows(grid, locked_positions):
-    
+    """Clears the rows and returns the number of rows cleared"""
     rows_cleared = 0
     for i in range(len(grid)-1, -1, -1):
         row = grid[i]
@@ -149,6 +159,7 @@ def clear_rows(grid, locked_positions):
             if y < lowest_cleared_row_index:
                 new_pos = (x, y + rows_cleared)
                 locked_positions[new_pos] = locked_positions.pop(pos)
+    return rows_cleared 
 
 def main(win):
     locked_positions = {}
@@ -161,11 +172,12 @@ def main(win):
 
     clock = pygame.time.Clock()
     fall_time  = 0
-    fall_speed = 0.27
+    fall_speed = 0.3
+    rows_cleared = 0
 
     while run:
         grid = create_grid(locked_positions)
-        fall_time += clock.get_rawtime()
+        fall_time  += clock.get_rawtime()
         clock.tick()
 
         if fall_time/1_000 > fall_speed:
@@ -216,9 +228,9 @@ def main(win):
             curr_piece = next_piece
             next_piece = get_piece()
             change_piece = False
-            clear_rows(grid, locked_positions)  
+            rows_cleared += clear_rows(grid, locked_positions)  
 
-        draw_window(surface=win, grid=grid)                
+        draw_window(surface=win, grid=grid, rows_cleared=rows_cleared)                
         draw_next_piece_window(surface=win, piece=next_piece)
         pygame.display.update()
 
