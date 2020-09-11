@@ -97,6 +97,17 @@ def convert_piece(piece):
     for i, pos in enumerate(positions):
         position[i] = (pos[0] - 2, pos[1] - 4)
 
+def lost(positions):
+    """Checks if the player has lost
+    Checks if any of the positions are causing the player to 
+    have the piece above the gameboard hieght limit"""
+    for pos in positions:
+        x, y = pos
+        if y < 1:
+            return True 
+
+
+
 def main(win):
     locked_positions = {}
     grid = create_grid(locked_positions)
