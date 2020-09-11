@@ -2,6 +2,7 @@ import pygame
 import random
 
 from defs import *
+from piece import Piece
 
 def create_grid(locked_positions={}, hieght=20, width=20):
     """Creates a Grid!
@@ -30,7 +31,7 @@ def create_grid(locked_positions={}, hieght=20, width=20):
 
 def get_shape():
     """Returns a random shape from [S, Z, I, O, J, L, T]"""
-    return random.choice(shapes)
+    return Piece(5, 0, random.choice(shapes))
 
 def draw_grid(surface, grid):
     """Draws the Tetris gameboard grid"""
@@ -53,3 +54,33 @@ def draw_window(surface, grid):
     surface.blit(label, (top_left_x + play_width/2 - (label.get_width()/2), 30))
     draw_grid(surface, grid)
     pygame.display.update()
+
+def main():
+    locked_positions = {}
+    grid = create_grid(locked_positions)
+
+    change_piece = False
+    run = True
+    curr_piece = get_shape()
+    next_piece = get_shape()
+
+    clock = pygame.time.Clock()
+    fall_time = 0
+
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    curr_piece.x -= 1
+
+                if event.key == pygame.K_RIGHT:
+                    curr_piece.x += 1
+
+                if event.key == pygame.K_DOWN:
+                    curr_piece.y += 1
+
+                if event.key == pygame.K_UP:
+                    curr_piece.rotation += 1
