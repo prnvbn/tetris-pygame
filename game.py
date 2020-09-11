@@ -70,7 +70,16 @@ def draw_window(surface, grid):
 
 def valid_space(piece, grid):
     """Checks if a a piece is existing in a valid space on the grid"""
-    valid_positions = [[(j, i) for j in range(board_cols)] for i in range(board_rows)]
+    valid_positions = [[(j, i) for j in range(board_cols) if grid[i][j] == (0, 0, 0)] for i in range(board_rows)]
+    valid_positions = [pos for sublist in valid_positions for pos in sublist] #Flattening the above list
+
+    piece_positions = convert_piece(piece)
+
+    for pos in piece_positions:
+        if pos not in valid_positions:
+            if pos[1] > -1: # accounting for the y offset when the piece is spawned
+                return False
+    return True            
 
 
 def convert_piece(piece):
