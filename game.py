@@ -4,7 +4,7 @@ import random
 from defs import *
 from piece import Piece
 
-def create_grid(locked_positions={}, hieght=20, width=20):
+def create_grid(locked_positions={}, hieght=10, width=20):
     """Creates a Grid!
 
     Parameters
@@ -43,6 +43,18 @@ def fill_grid(surface, grid):
     pygame.draw.rect(surface, (0, 255, 0), (top_left_x, top_left_y, play_width, play_height), 4)      
 
 
+def draw_gridlines(surface, grid):
+    """Draws the Tetris gameboard grid lines"""
+    sx = top_left_x
+    sy = top_left_y 
+
+    for i in range(len(grid)):
+        # Horixontal lines
+        pygame.draw.line(surface, (128, 128, 128), (sx, sy + i*block_size), (sx + play_width, sy + i*block_size))
+        for j in range(len(grid[i])):
+            # Vertical lines
+            pygame.draw.line(surface, (128, 128, 128), (sx + j*block_size, sy), (sx + j*block_size, sy + play_height))
+
 def draw_window(surface, grid):
     """Draws the Tetris game window"""
     surface.fill((0, 0, 0))
@@ -53,6 +65,7 @@ def draw_window(surface, grid):
 
     fill_grid(surface, grid)
     surface.blit(label, (top_left_x + play_width/2 - (label.get_width()/2), 30))
+    draw_gridlines(surface, grid)
     pygame.display.update()
 
 def valid_space(piece, grid):
