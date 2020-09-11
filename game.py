@@ -245,11 +245,21 @@ def main(win):
             pygame.time.delay(2000)
             run = False
 
-    pygame.display.quit()   
-
 
 def main_menu(win):
-    main(win)
+    run = True
+
+    while run:
+        win.fill((0, 0, 0))
+        draw_middle_text(("Press any key to play", 60, (255, 255, 255)))
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.KEYDOWN:
+                main()
+    pygame.display.quit()
 
 win = pygame.display.set_mode((s_width, s_height))
 pygame.display.set_caption("Tetris")
