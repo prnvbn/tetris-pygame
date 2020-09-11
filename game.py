@@ -33,7 +33,21 @@ def get_piece():
     """Returns a random shape from [S, Z, I, O, J, L, T]"""
     return Piece(5, 0, random.choice(shapes))
 
+def draw_next_piece_window(surface, piece):
+    font = pygame.font.SysFont("agencyfb", 30) 
+    label = font.render("Next", 1, (255, 255, 255)) 
 
+    sx = top_left_x + play_width + 50
+    sy = top_left_y + play_height/2 -100
+    layout = piece.shape[piece.rotation % len(piece.shape)]
+
+    for i, line in enumerate(layout):
+        row = list(line)
+        for j, col in enumerate(row):
+            if col == "0":
+                pygame.draw.rect(surface, piece.colour, (sx + j*block_size, sy + i*block_size, block_size, block_size))
+
+    surface.blit(label, (sx+50, sy-25))
 
 def fill_grid(surface, grid):
     """Fills the Tetris gameboard grid"""
@@ -68,7 +82,7 @@ def draw_window(surface, grid):
     fill_grid(surface, grid)
     surface.blit(label, (top_left_x + play_width/2 - (label.get_width()/2), 30))
     draw_gridlines(surface, grid)
-    pygame.display.update()
+
 
 def valid_space(piece, grid):
     """Checks if a a piece is existing in a valid space on the grid"""
@@ -87,9 +101,9 @@ def valid_space(piece, grid):
 def convert_piece(piece):
     """Returns a list of positions for the given piece"""
     positions = []
-    orientation = piece.shape[piece.rotation % len(piece.shape)]
+    layout = piece.shape[piece.rotation % len(piece.shape)]
 
-    for i, line in enumerate(orientation):
+    for i, line in enumerate(layout):
         row = list(line)
         for j, column in enumerate(row):
             if column == '0':
@@ -178,10 +192,14 @@ def main(win):
             change_piece = False  
 
         draw_window(surface=win, grid=grid)                
+        draw_next_piece_window(surface=win, piece=next_piece)
+        pygame.display.update()
 
         if lost(locked_positions):
             run = False
-    pygame.display.quit()    
+    pygame.display.quit()   
+
+
 def main_menu(win):
     main(win)
 
