@@ -29,6 +29,27 @@ def create_grid(locked_positions={}):
                 grid[row][col] = colour
     return grid
 
+def fill_grid(surface, grid):
+    """Fills the Tetris gameboard grid"""
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            pygame.draw.rect(surface, grid[i][j], (top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
+
+    # Drawing the grid border
+    pygame.draw.rect(surface, (0, 255, 0), (top_left_x, top_left_y, play_width, play_height), 4)      
+
+def draw_gridlines(surface, grid):
+    """Draws the Tetris gameboard grid lines"""
+    sx = top_left_x
+    sy = top_left_y 
+
+    for i in range(len(grid)):
+        # Horixontal lines
+        pygame.draw.line(surface, (128, 128, 128), (sx, sy + i*block_size), (sx + play_width, sy + i*block_size))
+        for j in range(len(grid[i])):
+            # Vertical lines
+            pygame.draw.line(surface, (128, 128, 128), (sx + j*block_size, sy), (sx + j*block_size, sy + play_height))
+
 def get_piece():
     """Returns a random shape from [S, Z, I, O, J, L, T]"""
     return Piece(5, 0, random.choice(shapes))
@@ -58,27 +79,9 @@ def draw_score_window(surface, rows_cleared):
 
     surface.blit(label, (sx, sy-120))
 
-def fill_grid(surface, grid):
-    """Fills the Tetris gameboard grid"""
-    for i in range(len(grid)):
-        for j in range(len(grid[i])):
-            pygame.draw.rect(surface, grid[i][j], (top_left_x + j*block_size, top_left_y + i*block_size, block_size, block_size), 0)
-
-    # Drawing the grid border
-    pygame.draw.rect(surface, (0, 255, 0), (top_left_x, top_left_y, play_width, play_height), 4)      
 
 
-def draw_gridlines(surface, grid):
-    """Draws the Tetris gameboard grid lines"""
-    sx = top_left_x
-    sy = top_left_y 
 
-    for i in range(len(grid)):
-        # Horixontal lines
-        pygame.draw.line(surface, (128, 128, 128), (sx, sy + i*block_size), (sx + play_width, sy + i*block_size))
-        for j in range(len(grid[i])):
-            # Vertical lines
-            pygame.draw.line(surface, (128, 128, 128), (sx + j*block_size, sy), (sx + j*block_size, sy + play_height))
 
 def draw_window(surface, grid, rows_cleared=0):
     """Draws the Tetris game window"""
