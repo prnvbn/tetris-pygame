@@ -38,6 +38,10 @@ def fill_grid(surface, grid):
     # Drawing the grid border
     pygame.draw.rect(surface, (0, 255, 0), (top_left_x, top_left_y, play_width, play_height), 4)      
 
+def get_piece():
+    """Returns a random shape from [S, Z, I, O, J, L, T]"""
+    return Piece(5, 0, random.choice(shapes))
+
 def draw_gridlines(surface, grid):
     """Draws the Tetris gameboard grid lines"""
     sx = top_left_x
@@ -49,10 +53,6 @@ def draw_gridlines(surface, grid):
         for j in range(len(grid[i])):
             # Vertical lines
             pygame.draw.line(surface, (128, 128, 128), (sx + j*block_size, sy), (sx + j*block_size, sy + play_height))
-
-def get_piece():
-    """Returns a random shape from [S, Z, I, O, J, L, T]"""
-    return Piece(5, 0, random.choice(shapes))
 
 def draw_next_piece_window(surface, piece):
     font = pygame.font.SysFont("agencyfb", 30) 
@@ -78,10 +78,6 @@ def draw_score_window(surface, rows_cleared):
     sy = top_left_y + play_height/2 -100
 
     surface.blit(label, (sx, sy-120))
-
-
-
-
 
 def draw_window(surface, grid, rows_cleared=0):
     """Draws the Tetris game window"""
