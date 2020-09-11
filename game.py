@@ -55,7 +55,11 @@ def draw_window(surface, grid):
     draw_grid(surface, grid)
     pygame.display.update()
 
-def main():
+def valid_space(piece, grid):
+    """Checks if a a piece is existing in a valid space on the grid"""
+    pass
+
+def main(win):
     locked_positions = {}
     grid = create_grid(locked_positions)
 
@@ -75,12 +79,22 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     curr_piece.x -= 1
+                    if not valid_space(curr_piece, grid):
+                        curr_piece.x +=1
 
                 if event.key == pygame.K_RIGHT:
                     curr_piece.x += 1
+                    if not valid_space(curr_piece, grid):
+                        curr_piece.x -=1
 
                 if event.key == pygame.K_DOWN:
                     curr_piece.y += 1
+                    if not valid_space(curr_piece, grid):
+                        curr_piece.y -=1
 
                 if event.key == pygame.K_UP:
                     curr_piece.rotation += 1
+                    if not valid_space(curr_piece, grid):
+                        curr_piece.rotation -= 1
+
+        draw_window(surface=win, grid=grid)                
