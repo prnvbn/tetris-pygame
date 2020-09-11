@@ -144,7 +144,7 @@ def clear_rows(grid, locked_positions):
     # Shifting all the rows down
 
     if rows_cleared > 0:
-        for pos in sorted(list(locked_positions),key=lambda p: p[1], reverse=True):
+        for pos in sorted(locked_positions,key=lambda p: p[1], reverse=True):
             x, y = pos
             if y < lowest_cleared_row_index:
                 new_pos = (x, y + rows_cleared)
