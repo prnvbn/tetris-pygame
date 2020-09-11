@@ -95,8 +95,9 @@ def convert_piece(piece):
 
     # Removing the existing period offsets (see defs.py)
     for i, pos in enumerate(positions):
-        position[i] = (pos[0] - 2, pos[1] - 4)
-
+        positions[i] = (pos[0] - 2, pos[1] - 4)
+    return positions
+    
 def lost(positions):
     """Checks if the player has lost
     Checks if any of the positions are causing the player to 
@@ -158,6 +159,7 @@ def main(win):
                     if not valid_space(curr_piece, grid):
                         curr_piece.rotation -= 1
 
+        shape_pos = convert_piece(curr_piece)
         draw_window(surface=win, grid=grid)                
 
 def main_menu(win):
