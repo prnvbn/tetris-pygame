@@ -118,9 +118,21 @@ def main(win):
     next_piece = get_shape()
 
     clock = pygame.time.Clock()
-    fall_time = 0
+    fall_time  = 0
+    fall_speed = 0.27
 
     while run:
+        grid = create_grid(locked_positions)
+        fall_time += clock.get_rawtime()
+        clock.tick()
+
+        if fall_time/1_000 > fall_speed:
+                fall_time = 0
+                curr_piece.y += 1
+                if not valid_space(curr_piece, grid) and curr_piece.y > 0:
+                    curr_piece.y -= 1
+                    change_piece = True    
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
