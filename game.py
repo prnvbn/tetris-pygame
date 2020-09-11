@@ -29,9 +29,11 @@ def create_grid(locked_positions={}):
                 grid[row][col] = colour
     return grid
 
-def get_shape():
+def get_piece():
     """Returns a random shape from [S, Z, I, O, J, L, T]"""
     return Piece(5, 0, random.choice(shapes))
+
+
 
 def fill_grid(surface, grid):
     """Fills the Tetris gameboard grid"""
@@ -114,8 +116,8 @@ def main(win):
 
     change_piece = False
     run = True
-    curr_piece = get_shape()
-    next_piece = get_shape()
+    curr_piece = get_piece()
+    next_piece = get_piece()
 
     clock = pygame.time.Clock()
     fall_time  = 0
@@ -172,7 +174,7 @@ def main(win):
                 locked_positions[(pos[0], pos[1])] = curr_piece.colour
 
             curr_piece = next_piece
-            next_piece = get_shape()
+            next_piece = get_piece()
             change_piece = False  
 
         draw_window(surface=win, grid=grid)                
