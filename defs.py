@@ -14,10 +14,14 @@ s_width = 800
 s_height = 700
 
 # Play area Size 
-play_width = 300  # meaning 300 // 10 = 30 width per block
-play_height = 600  # meaning 600 // 20 = 30 height per block
-
 block_size = 30
+
+board_rows = 20
+board_cols = 10
+
+play_width = block_size * board_cols  # meaning 300 // 10 = 30 width per block
+play_height = block_size * board_rows   # meaning 600 // 20 = 30 height per block
+
 top_left_x = (s_width - play_width) // 2
 top_left_y = s_height - play_height
 

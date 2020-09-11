@@ -4,7 +4,7 @@ import random
 from defs import *
 from piece import Piece
 
-def create_grid(locked_positions={}, hieght=10, width=20):
+def create_grid(locked_positions={}):
     """Creates a Grid!
 
     Parameters
@@ -19,7 +19,7 @@ def create_grid(locked_positions={}, hieght=10, width=20):
     """
     # initialising a black 20 x 10 grid
     # 20 rows and 10 colums
-    grid = [[(0, 0, 0) for _ in range(hieght)] for _ in range(width)]
+    grid = [[(0, 0, 0) for _ in range(board_cols)] for _ in range(board_rows)]
 
     # Colouring the locked positions
     for row in range(len(grid)):
@@ -70,7 +70,7 @@ def draw_window(surface, grid):
 
 def valid_space(piece, grid):
     """Checks if a a piece is existing in a valid space on the grid"""
-    pass
+    valid_positions = [[(j, i) for j in range(board_cols)] for i in range(board_rows)]
 
 
 def convert_piece(piece):
