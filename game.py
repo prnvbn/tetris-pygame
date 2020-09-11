@@ -72,6 +72,22 @@ def valid_space(piece, grid):
     """Checks if a a piece is existing in a valid space on the grid"""
     pass
 
+
+def convert_piece(piece):
+    """Returns a list of positions for the given piece"""
+    positions = []
+    orientation = piece.shape[piece.rotation % len(piece.shape)]
+
+    for i, line in enumerate(orientation):
+        row = list(line)
+        for j, column in enumerate(row):
+            if column == '0':
+                positions.append((piece.x + j, piece.y +i)) 
+
+    # Removing the existing period offsets (see defs.py)
+    for i, pos in enumerate(positions):
+        position[i] = (pos[0] - 2, pos[1] - 4)
+
 def main(win):
     locked_positions = {}
     grid = create_grid(locked_positions)
