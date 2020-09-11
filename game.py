@@ -180,6 +180,10 @@ def main(win):
     fall_speed = 0.3
     rows_cleared = 0
 
+    pygame.mixer.init()
+    pygame.mixer.music.load("Original Tetris theme (Tetris Soundtrack).mp3")
+    pygame.mixer.music.play()
+
     while run:
         grid = create_grid(locked_positions)
         fall_time  += clock.get_rawtime()
@@ -196,6 +200,7 @@ def main(win):
             if event.type == pygame.QUIT:
                 run = False
                 pygame.display.quit()
+                pygame.mixer.music.stop()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
