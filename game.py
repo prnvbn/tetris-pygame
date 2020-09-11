@@ -92,6 +92,12 @@ def draw_window(surface, grid, rows_cleared=0):
     draw_score_window(surface, rows_cleared)
     draw_gridlines(surface, grid)
 
+def draw_middle_text(surface, text, size, colour):
+    """Draws text in the middle of the screen"""
+    font = pygame.font.SysFont("agencyfb", size, bold=True)
+    label = font.render(text, 1, colour)
+
+    surface.blit(label, (top_left_x + play_width/2 - (label.get_width()/2), top_left_y + play_height/2 - (label.get_height()/2)))
 
 def valid_space(piece, grid):
     """Checks if a a piece is existing in a valid space on the grid"""
@@ -234,7 +240,11 @@ def main(win):
         pygame.display.update()
 
         if lost(locked_positions):
+            draw_middle_text(win, "YOU LOST", 80, (255, 255, 255))
+            pygame.display.update()
+            pygame.time.delay(2000)
             run = False
+
     pygame.display.quit()   
 
 
