@@ -123,6 +123,32 @@ def lost(positions):
         if y < 1:
             return True 
 
+def clear_rows(grid, locked_positions):
+    
+    rows_cleared = 0
+    for i in range(len(grid)-1, -1, -1):
+        row = grid[i]
+
+        # Checking if the ow has no empty space
+        if (0, 0, 0) not in row:
+            rows_cleared += 1
+            lowest_cleared_row_index = i
+
+            # Clearing the filled row
+            for j in range(len(row)):
+                try:
+                    del locked_positions[(j, i)]
+                except:
+                    continue 
+
+    # Shifting all the rows down
+
+    if rows_cleared > 0:
+        for pos in sorted(list(locked_positions),key=lambda p: p[1], reverse=True):
+            x, y = pos
+            if y < lowest_cleared_row_index:
+                new_pos = (x, y + rows_cleared)
+                locked_positions[new_pos] = locked_positions.pop(pos)
 
 def main(win):
     locked_positions = {}
@@ -189,7 +215,8 @@ def main(win):
 
             curr_piece = next_piece
             next_piece = get_piece()
-            change_piece = False  
+            change_piece = False
+            clear_rows(grid, locked_positions)  
 
         draw_window(surface=win, grid=grid)                
         draw_next_piece_window(surface=win, piece=next_piece)
