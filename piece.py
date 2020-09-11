@@ -1,5 +1,5 @@
 from defs import shapes
-from defs import shape_colors
+from defs import shape_colours
 
 class Piece(object):
     
@@ -8,5 +8,5 @@ class Piece(object):
         self.y = y
         self.shape = shape
 
-        self.color = shape_colors[shapes.index(shape)]
+        self.colour = shape_colours[shapes.index(shape)]
         self.rotation = 0

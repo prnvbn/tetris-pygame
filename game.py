@@ -26,7 +26,7 @@ def create_grid(locked_positions={}):
         for col in range(len(grid[row])):
             if (col, row) in locked_positions:    
                 colour = locked_positions[(col, row)]
-                grid[row][j] = colour
+                grid[row][col] = colour
     return grid
 
 def get_shape():
@@ -97,7 +97,7 @@ def convert_piece(piece):
     for i, pos in enumerate(positions):
         positions[i] = (pos[0] - 2, pos[1] - 4)
     return positions
-    
+
 def lost(positions):
     """Checks if the player has lost
     Checks if any of the positions are causing the player to 
@@ -106,7 +106,6 @@ def lost(positions):
         x, y = pos
         if y < 1:
             return True 
-
 
 
 def main(win):
@@ -159,7 +158,23 @@ def main(win):
                     if not valid_space(curr_piece, grid):
                         curr_piece.rotation -= 1
 
-        shape_pos = convert_piece(curr_piece)
+        piece_positions = convert_piece(curr_piece)
+
+        # Adding the current piece colours to the grid
+        for i in range(len(piece_positions)):
+            x, y = piece_positions[i]
+            if y > -1: 
+                grid[y][x] = curr_piece.colour
+
+        # Updating the locked positions i.e. saving the piece on the gameboard
+        if change_piece:
+            for pos in piece_positions:
+                locked_positions[(pos[0], pos[1])] = curr_piece.colour
+                
+            curr_piece = next_piece
+            next_piece = get_shape()
+            change_piece = False  
+
         draw_window(surface=win, grid=grid)                
 
 def main_menu(win):
