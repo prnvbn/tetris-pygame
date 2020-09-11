@@ -170,13 +170,16 @@ def main(win):
         if change_piece:
             for pos in piece_positions:
                 locked_positions[(pos[0], pos[1])] = curr_piece.colour
-                
+
             curr_piece = next_piece
             next_piece = get_shape()
             change_piece = False  
 
         draw_window(surface=win, grid=grid)                
 
+        if lost(locked_positions):
+            run = False
+    pygame.display.quit()    
 def main_menu(win):
     main(win)
 
